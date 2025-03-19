@@ -75,8 +75,8 @@ ul li:before{
     background-image: url(unchecked-img.png);
     background-size: cover;
     background-position: center;
-    bottom: 8px;
-    left: 15px;
+    top: 8.5px;
+    left:15px;
 }
 
 
