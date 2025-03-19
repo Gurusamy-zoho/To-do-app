@@ -64,6 +64,11 @@ function registerUser() {
                         showConfirmButton: false,
                         timer: 1500
                     });
+
+                    setTimeout(() => {
+                        window.location.href = "/todoList"; 
+                    }, 1500);
+                    
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -98,3 +103,26 @@ function validateEmail(email) {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$/;
     return regex.test(email);
 }
+
+// function getTasks(){
+//     const email = document.getElementById('email').value.trim();
+
+//     jsonObj = {
+//         "email":email
+//     }
+
+//     let xhr = new XMLHttpRequest();
+//     xhr.open("POST", "http://127.0.0.1:4903/getTasks", true);
+//     xhr.setRequestHeader("Content-Type", "application/json");
+    
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState === 4) {
+//             let response = JSON.parse(xhr.responseText);
+//             if (xhr.status === 200) {
+              
+//             }
+//         }
+
+//         xhr.send(JSON.stringify(jsonObj))
+//     }
+// }
