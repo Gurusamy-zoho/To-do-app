@@ -1,11 +1,11 @@
-# Use Flask and Mysqldb 
 
 from flask import Flask, request, jsonify,render_template
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-app = Flask(__name__)
+from flask_cors import CORS
+from flask import jsonify
 
-# MySQL Configuration
+app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '23122006Guru*'
@@ -21,7 +21,9 @@ def home():
 @app.route('/SignIn')
 def login():
     return render_template('SignIn.html')
-
+@app.route('/todoList')
+def todoList():
+    return render_template('index.html')
 # @app.route('/users', methods=['GET'])
 # def get_users():
 #     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -143,6 +145,16 @@ def login():
 #     else:
 #         return jsonify([{"message": "User not added!"}])
 
+@app.route('/getTasks',methods=["GET"])
+def getTasks():
+    
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT TaskName,IsCompleted FROM Tasks where UserEmail = (%s),(email)")  
+    rows = cursor.fetchall()
+    
+    return {"data":rows}
+    
 
 @app.route('/addUser', methods=["POST"])
 def add():
@@ -208,52 +220,36 @@ def add():
         return jsonify([{"message": "User not added!"}])
 
 
-
-@app.route('/loginUser', methods=["PUT"])
-def SignIn(user_ID):
+@app.route('/loginUser', methods=["POST"]) 
+def SignIn():
     data = request.get_json(force=True)
-    
     response = {"message": ""}
+
+    # Validate input data
+    if "email" not in data or "password" not in data:
+        return jsonify({"message": "Email and password are required"}), 400
     
+    email = data["email"]
+    password = data["password"]
+
+    if not isinstance(email, str) or not isinstance(password, str):
+        return jsonify({"message": "Invalid email or password format"}), 400
+    
+    # Check user in the database
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT email from Users")  
-    rows = cursor.fetchall()
-    user_list = [i[0] for i in rows]
+    query = "SELECT password FROM Users WHERE email = %s"
+    cursor.execute(query, (email,))
+    row = cursor.fetchone()
     cursor.close()
-
-
-    if "email" in data:
-        email = data["email"]
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT email FROM Users")  
-        rows = cursor.fetchall()
-        email_list = [i[0] for i in rows]
-        cursor.close()
-
-        if email and isinstance(email, str) and email not in email_list:
-            cursor = mysql.connection.cursor()
-            query = "UPDATE Amazon_users SET email = %s WHERE user_ID = %s"
-            cursor.execute(query, (email, user_ID))
-            mysql.connection.commit()
-            cursor.close()
+    
+    if row:
+        stored_password = row[0]
+        if password == stored_password:
+            return jsonify({"message": "User login successfully!"}), 200
         else:
-            return jsonify({"message": "Email already exists or is invalid"})
-
-    if "password" in data:
-        password = data["password"]
-        if password and isinstance(password, str):
-            cursor = mysql.connection.cursor()
-            query = "UPDATE Amazon_users SET password = %s WHERE user_ID = %s"
-            cursor.execute(query, (password, user_ID))
-            mysql.connection.commit()
-            cursor.close()
-        else:
-            return jsonify({"message": "Given password should be a valid string"})
-
-
-    return jsonify([{"message": "User login successfully!"}])
-
-
+            return jsonify({"message": "Invalid password"}), 401
+    else:
+        return jsonify({"message": "Email not found"}), 404
 
 # @app.route('/deleteUser/<int:user_ID>', methods=["DELETE"])
 # def deleteUser(user_ID):
