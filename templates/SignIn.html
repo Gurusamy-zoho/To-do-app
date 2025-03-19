@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="static/css/SignIn.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
 <div class="container">
     <h2>Login</h2>
-    <div class="message" id="message"></div>
+    <span class="Email_Message"></span>
     <input type="email" id="email" placeholder="Email" required />
+    <span class="Password_Message"></span>
     <input type="password" id="password" placeholder="Password" required />
-    <button onclick="loginUser()">Login</button>
-    <!--<a class="signup-link" href="/SignUp">Don't have an account? Sign up here</a>--> 
+    <button onclick="loginUser()" type="submit">Login</button>
+    <a class="signup-link" href="/SignUp">Don't have an account? Sign up here</a>
 </div>
 
-<script scr="static/js/SignIn.js"></script>
-
 </body>
+<script src="static/js/SignIn.js"></script>
+
 </html>
