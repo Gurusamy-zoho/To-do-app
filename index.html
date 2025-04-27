@@ -5,15 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo List 📋</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
+
+
+  <div id="topBox">
+    <h3 id="alert-msg"><h3>
+    <div>
+      <br>
+      <button onclick="hideBox()" id="alert-btn">OK</button>
+    </div>
+</div>
+
+<div id="promiseBox">
+  <div id="promiseBox-Contents">
+    <label>Update Task:</label>
+    <input type="text" id="updated-input-box">
+  <div id="update-Error"></div>
+  </div>
+  <br>
+  <button id="updated-cancel-btn" onclick="cancelUpdatedBox()">Cancel</button>
+  <button id="updated-btn" onclick="hideUpdateBox()">Done   </button>
+</div>
+
     <div class="container">
       <div class="todo-app">
          <h2>ToDo List 📋</h2>
          <div class="rowDiv">
             <input type="text" placeholder="Enter your tasks" id="input-box">
-            <button id="add-btn">Add</button>
+            <button id="add-btn" onclick="addTasks()">Add</button>
          </div>
          <ul id="list-container">
 

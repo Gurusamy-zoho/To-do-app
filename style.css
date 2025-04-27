@@ -38,7 +38,7 @@
     margin: 25px 30px;
 }
 
-input{
+#input-box{
     flex: 1;
     border:none;
     outline: none;
@@ -46,7 +46,7 @@ input{
     padding: 10px;
 }
 
-button{
+#add-btn,#alert-btn,#updated-btn,#updated-cancel-btn{
     border:none;
     outline: none;
     padding: 16px 20px;
@@ -64,6 +64,9 @@ ul li{
     user-select: none;
     cursor: pointer;
     position: relative;
+    background-color: #f5f1f1;
+    border: 1px solid #f5f1f1;
+    border-radius: 50px;
 }
 
 ul li:before{
@@ -102,7 +105,7 @@ ul li.checked::before {
 ul li span{
     position: absolute;
     right: 5px;
-    top: 2px;
+    top: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +118,71 @@ ul li span{
     
 }
 
-ul li span:hover{
-    background-color: #f1efef;
-    
+/* ul li span p{
+    font-size: 25px;
+    color: red;
+    font-weight: 800;
+} */
+
+ul li span p {
+    font-size: 25px;
+    color: #ff4d4d; /* Soft red for delete */
+    font-weight: 800;
 }
+
+ul li span i {
+    color: #007bff; /* Bright blue for edit */
+}
+
+
+
+.editIcon{
+    background-color:transparent;
+    border: none;
+    margin-right: 30px;
+}
+
+/* ul li span i{
+ 
+    color: green;
+    
+} */
+
+#topBox,#promiseBox{
+    position: fixed;
+    top: -200px;
+    left: 44%;
+    margin-left: -150px;
+    width: 500px;
+    padding: 15px;
+    background-color:rgb(255, 251, 251);
+    border: 1px solid #333;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: top 0.5s ease;
+  }
+
+  #topBox.show,#promiseBox.showUpdateBox{
+    top: 20px;
+  }
+
+  #updated-input-box{
+    width: 70%;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius:4px;
+  }
+
+  .update-Error{
+    font-size: 14px;
+    color: red;
+    position: relative;
+    right: 70px;
+  }
+
+  .update-error-input{
+    outline: none;
+    border: 1.5px solid red;
+  }
